@@ -10,14 +10,17 @@ export default function Board() {
   const [ winner, setWinner ] = useState(null);
   const [ xIsNext, setXIsNext ] = useState(true);
 
-  const status = 'Next player: X';
-
   const handleClick = (i) => {
     const squareCopy = squares.slice();
+    status.replace("X", "O")
     squareCopy[i] = xIsNext ? 'X' : 'O';
     setSquares(squareCopy);
     setWinner(calculateWinner(squareCopy));
     setXIsNext(!xIsNext);
+  }
+  const setstatus = () => {
+    const status = xIsNext ? 'Next player: X' : 'Next player: O';
+    return status;
   }
 
   const renderSquare = (i) => {
@@ -28,7 +31,7 @@ export default function Board() {
 
   return (
     <div>
-      <div className="status" onClick={() => setSquares("X")}>{status}</div>
+      <div data-testid="status" className="status" onClick={() => setSquares("X")}>{setstatus()}</div>
       {
         winner ? <Banner name={winner} /> : null
       }
